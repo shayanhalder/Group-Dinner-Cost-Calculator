@@ -1,0 +1,29 @@
+.addButton {
+  width: 40%;
+  height: 50px;
+  margin: 10px 5px;
+  border-radius: 20px;
+  border: 3px solid var(--add-button-border);
+  background-color: var(--add-button-filling);
+  transition: background-color 0.2s ease-out;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: var(--add-button-hover);
+}
+
+.removeButton {
+  width: 40%;
+  height: 50px;
+  margin: 10px 5px;
+  border-radius: 20px;
+  border: 3px solid var(--remove-button-border);
+  background-color: var(--remove-button-filling);
+  transition: background-color 0.2s ease-out;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background-color: var(--remove-button-hover);
+}

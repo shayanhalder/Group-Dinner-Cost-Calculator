@@ -1,7 +1,12 @@
-import MemberStyles from './MembersAccordion.module.css';
-import { useState, useRef, useEffect } from 'react';
+import AccordionStyles from './Accordion.module.css';
+import { useState, useRef, useEffect, ReactNode } from 'react';
 
-export default function Accordion() {
+interface AccordionProps {
+    buttonTitle: string,
+    children: ReactNode
+}
+
+export default function Accordion( {buttonTitle, children } : AccordionProps ) {
     const [toggled, setToggled] = useState(false);
     const ref = useRef<HTMLDivElement>(null); 
 
@@ -20,11 +25,9 @@ export default function Accordion() {
 
     return (
         <>
-            <button className={MemberStyles.toggle} onClick={() => setToggled(!toggled)}> Group Members </button>
-            <div className={MemberStyles.container} ref={ref}>
-                <p>
-                    Group members are: shayan, alan, dalton, bob, steve, john, johs
-                </p>
+            <button className={AccordionStyles.toggle} onClick={() => setToggled(!toggled)}> {buttonTitle} </button>
+            <div className={AccordionStyles.container} ref={ref}>
+                {children}
             </div>
         </>
     )

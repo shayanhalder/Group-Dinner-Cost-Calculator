@@ -1,3 +1,10 @@
 :root {
   --gray-border: #b7b7b7;
+  --add-button-border: #5cbcff;
+  --add-button-filling: #a2d8ff;
+  --add-button-hover: #ddf1ff;
+
+  --remove-button-border: #ff6666;
+  --remove-button-filling: rgb(255, 148, 148);
+  --remove-button-hover: rgb(252, 219, 219);
 }

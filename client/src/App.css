@@ -9,3 +9,9 @@
     text-align: center;
   }
 }
+
+.accordionContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

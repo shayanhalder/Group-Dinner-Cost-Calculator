@@ -1,6 +1,7 @@
 import './App.css'
 import Accordion from './components/accordion/Accordion.tsx'
 import MemberList from './components/MemberList/MemberList.tsx'
+import FoodTable from './components/FoodTable/FoodTable.tsx'
 import { useState } from 'react'
 
 function App() {
@@ -13,6 +14,11 @@ function App() {
         <Accordion buttonTitle={"Group Members"} members={members}>
           <MemberList groupMembers={members} setGroupMembers={setMembers} /> 
         </Accordion>
+
+        <Accordion buttonTitle={"Group Food Items"} members={members}>
+          <FoodTable />
+        </Accordion>
+
 
       </div>
       

@@ -28,26 +28,29 @@ export default function Accordion( {buttonTitle, members, children } : Accordion
     }, [toggled])
 
     useEffect(() => {
-        if (ref.current && membersRef.current.length < members.length) {
-            ref.current.style.height = `${ref.current.scrollHeight + 20}px`;
-            ref.current.style.overflow = "visible";
-            ref.current.style.border = "1px solid black";
-            membersRef.current = members
-        } else if (ref.current && membersRef.current.length > members.length) {
-            ref.current.style.height = `${ref.current.scrollHeight - 30}px`;
-            ref.current.style.overflow = "visible";
-            ref.current.style.border = "2px solid var(--gray-border)";
-            membersRef.current = members
+        if (buttonTitle == "Group Members") {
+            if (ref.current && membersRef.current.length < members.length) {
+                ref.current.style.height = `${ref.current.scrollHeight + 20}px`;
+                ref.current.style.overflow = "visible";
+                ref.current.style.border = "1px solid black";
+                membersRef.current = members
+            } else if (ref.current && membersRef.current.length > members.length) {
+                ref.current.style.height = `${ref.current.scrollHeight - 30}px`;
+                ref.current.style.overflow = "visible";
+                ref.current.style.border = "2px solid var(--gray-border)";
+                membersRef.current = members
+            }
         }
+        
     }, [members])
 
     return (
-        <>
+        <div className={AccordionStyles.parent}>
             <button className={AccordionStyles.toggle} onClick={() => setToggled(!toggled)}> {buttonTitle} </button>
             <div className={AccordionStyles.container} ref={ref}>
                 {children}
             </div>
-        </>
+        </div>
     )
 
 }

@@ -16,6 +16,8 @@
     overflow: hidden;
     background-color: var(--accordion-background-color);
     height: 0px;
+    position: relative;
+    left: 5px;
     transition: height 0.2s ease-out;
   }
 }
@@ -38,6 +40,16 @@
     background-color: var(--accordion-background-color);
     overflow: hidden;
     height: 0px;
+    position: relative;
+    left: 50px;
     transition: height 0.2s ease-out;
   }
+}
+
+.parent {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 10px 10px;
 }

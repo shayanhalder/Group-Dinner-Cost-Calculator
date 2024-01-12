@@ -1,6 +1,4 @@
 import ButtonStyles from "../Button/Button.module.css";
-// import MemberListStyles from "./MemberList.module.css";
-
 import { useState, useRef } from "react";
 
 interface MemberListProps {

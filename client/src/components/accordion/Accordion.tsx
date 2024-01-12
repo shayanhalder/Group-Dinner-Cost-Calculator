@@ -1,6 +1,5 @@
 import AccordionStyles from './Accordion.module.css';
 import { useState, useRef, useEffect, ReactNode } from 'react';
-// import { render } from 'react-dom';
 
 interface AccordionProps {
     buttonTitle: string,
@@ -15,7 +14,6 @@ export default function Accordion( {buttonTitle, members, children } : Accordion
 
     useEffect(() => {
         if (ref.current && !toggled) {
-            // ref.current.style.maxHeight = "0px";
             ref.current.style.height = "0px";
             ref.current.style.overflow = "hidden";
             setTimeout(() => {
@@ -23,11 +21,9 @@ export default function Accordion( {buttonTitle, members, children } : Accordion
                     ref.current.style.border = "none";
             }, 100)
         } else if (ref.current && toggled) {
-            // ref.current.style.maxHeight = "200px";
-            // console.log(ref)
             ref.current.style.overflow = "visible";
             ref.current.style.height = `${ref.current.scrollHeight + 20}px`;
-            ref.current.style.border = "1px solid black";
+            ref.current.style.border = "2px solid var(--gray-border)";
         }
     }, [toggled])
 
@@ -40,7 +36,7 @@ export default function Accordion( {buttonTitle, members, children } : Accordion
         } else if (ref.current && membersRef.current.length > members.length) {
             ref.current.style.height = `${ref.current.scrollHeight - 30}px`;
             ref.current.style.overflow = "visible";
-            ref.current.style.border = "1px solid black";
+            ref.current.style.border = "2px solid var(--gray-border)";
             membersRef.current = members
         }
     }, [members])

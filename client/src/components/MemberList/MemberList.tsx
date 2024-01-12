@@ -28,15 +28,10 @@ export default function MemberList( { groupMembers, setGroupMembers } : MemberLi
 
     return (
         <>
-            <div ref={containerRef} className={ButtonStyles.container}>
-                <button className={ButtonStyles.addButton} onClick={() => addMember()} > Add </button>
-                <button className={ButtonStyles.removeButton} onClick={() => setRemoveMode(!removeMode)}> Remove </button>
-            </div>
-            <p> Group Members: </p>
+            <p> Group Members: {groupMembers.length} </p>
             <ol>
                 {groupMembers.map((member: string) => {
                     return (
-                        <>
                             <li key={Math.random()}> {member}  {" "}
                                 {removeMode == true ? 
                                     (<span key={Math.random()} onClick={removeMember} 
@@ -45,11 +40,14 @@ export default function MemberList( { groupMembers, setGroupMembers } : MemberLi
                                     </span>)
                                         : null }
                             </li> 
-                        </>
                     )
                     })
                 } 
             </ol>
+            <div ref={containerRef} className={ButtonStyles.container}>
+                <button className={ButtonStyles.addButton} onClick={() => addMember()} > Add </button>
+                <button className={ButtonStyles.removeButton} onClick={() => setRemoveMode(!removeMode)}> Remove </button>
+            </div>
         </>
     )
 

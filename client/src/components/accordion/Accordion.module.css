@@ -12,8 +12,10 @@
     width: 90%;
     border-radius: 20px;
     padding: 0px 10px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border: 2px solid var(--gray-border);
     overflow: hidden;
+    background-color: var(--accordion-background-color);
     height: 0px;
     transition: height 0.2s ease-out;
   }
@@ -33,7 +35,9 @@
     width: 70%;
     border-radius: 20px;
     padding: 0px 10px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    border: 2px solid var(--gray-border);
+    background-color: var(--accordion-background-color);
     overflow: hidden;
     height: 0px;
     transition: height 0.2s ease-out;

@@ -14,8 +14,8 @@
     padding: 0px 10px;
     border: 1px solid black;
     overflow: hidden;
-    max-height: 0px;
-    transition: max-height 0.2s ease-out;
+    height: 0px;
+    transition: height 0.2s ease-out;
   }
 }
 
@@ -35,7 +35,7 @@
     padding: 0px 10px;
     border: 1px solid black;
     overflow: hidden;
-    max-height: 0px;
-    transition: max-height 0.2s ease-out;
+    height: 0px;
+    transition: height 0.2s ease-out;
   }
 }

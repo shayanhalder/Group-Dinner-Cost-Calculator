@@ -10,8 +10,8 @@ function App() {
     <>
       <h1 className="title"> Group Dinner Price Calculator</h1>
       <div className="accordionContainer"> 
-        <Accordion buttonTitle={"Group Members"}> 
-          <MemberList groupMembers={members} setGroupMembers={setMembers}/>
+        <Accordion buttonTitle={"Group Members"} members={members}>
+          <MemberList groupMembers={members} setGroupMembers={setMembers} /> 
         </Accordion>
 
       </div>

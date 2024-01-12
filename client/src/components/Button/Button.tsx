@@ -7,7 +7,7 @@ interface ButtonProps {
     children: ReactNode
 }
 
-export default function Button( { buttonType, action, children } : ButtonProps) {
+export default function Button( { buttonType, children } : ButtonProps) {
     let buttonClass;
 
     if (buttonType == "add") {

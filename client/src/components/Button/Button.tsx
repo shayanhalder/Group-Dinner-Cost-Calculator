@@ -3,10 +3,11 @@ import { ReactNode } from "react";
 
 interface ButtonProps {
     buttonType: string,
+    action: React.Dispatch<React.SetStateAction<string[]>>,
     children: ReactNode
 }
 
-export default function Button( { buttonType, children } : ButtonProps) {
+export default function Button( { buttonType, action, children } : ButtonProps) {
     let buttonClass;
 
     if (buttonType == "add") {

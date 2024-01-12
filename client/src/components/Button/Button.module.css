@@ -27,3 +27,8 @@
 .removeButton:hover {
   background-color: var(--remove-button-hover);
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+}

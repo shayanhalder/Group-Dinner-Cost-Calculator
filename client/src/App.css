@@ -15,3 +15,7 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+li {
+  margin: 10px 10px;
+}

@@ -16,7 +16,7 @@ function App() {
         </Accordion>
 
         <Accordion buttonTitle={"Group Food Items"} members={members}>
-          <FoodTable />
+          <FoodTable members={members}/>
         </Accordion>
 
 

@@ -1,26 +1,50 @@
 import FoodTableStyles from "./FoodTable.module.css";
 import ButtonStyles from "../Button/Button.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function FoodTable( ) {
-    const [foodItems, setFoodItems] = useState([["Name", "Price", "Quantity", "Total $", "$ / person"]]);
-    const [removeMode, setRemoveMode] = useState(false);
+export default function FoodTable( {members} : {members: string[]} ) {
+    const [foodItems, setFoodItems] = useState<string[][]>([["Name", "Price", "Quantity", "Total $", "$ / person"]]);
+    const [removeMode, setRemoveMode] = useState<boolean>(false);
 
-    function addItem() {
-        let newRowData = []
-        for (let header of foodItems[0]) {
-            const newHeaderData = prompt(`Enter ${header}`)
-            if (newHeaderData == null)
-                return            
-            newRowData.push(newHeaderData)
+    // if group members added or removed after creation of the food item row, then the cost per person should update
+    useEffect(() => {
+        let foodItemsCopy = [...foodItems];
+        for (let rowIndex = 1; rowIndex < foodItems.length; rowIndex++) {
+            const totalCost = parseInt(foodItems[rowIndex][3]); // price * quantity
+            foodItemsCopy[rowIndex][4] = (totalCost / members.length).toFixed(2).toString();
+        }
+
+        setFoodItems(foodItemsCopy);
+
+    }, [members])
+
+    function addItem(): void {
+        let newRowData = [];
+        for (const [index, header] of foodItems[0].entries()) {
+            const newHeaderData = prompt(`Enter ${header}`);
+            if (newHeaderData == null) // nothing entered
+                return; 
+
+            newRowData.push(newHeaderData);
+
+            if (index == 2) { // after quantity is entered, the rest of the values are calculated
+                const totalCost = parseInt(newRowData[1]) * parseInt(newRowData[2]); // price * quantity
+                const costPerPerson = Math.round((totalCost / members.length) * 100) / 100;
+
+                newRowData.push(totalCost.toString())
+                newRowData.push(costPerPerson.toString())
+
+                setFoodItems([...foodItems, newRowData]);
+                return;
+            }
             
         }
         setFoodItems([...foodItems, newRowData])
     }
 
-    function removeItem(rowIndex: number) {
+    function removeItem(rowIndex: number): void {
         let foodItemsCopy = [...foodItems]
-        foodItemsCopy.splice(rowIndex, 1)
+        foodItemsCopy.splice(rowIndex, 1) // removes entire row from the table using the rowIndex
         setFoodItems(foodItemsCopy)
     }
 
@@ -32,16 +56,16 @@ export default function FoodTable( ) {
                     foodItems.map((currentRow, currentRowIndex) => {
                             return (
                                 <tr key={currentRowIndex}>
-                                    { // if first row then use <th> (table header tag) otherwise use <td> (table data tag)
-                                     //   index == 0 ? currentRow.map(data => <th> {data} </th>) : currentRow.map(data => <td> {data} </td>)
-                                    }
 
-                                    { // if first row then use <th> (table header tag) otherwise use <td> (table data tag)
+                                    { 
                                         currentRow.map((data, currentColumnIndex) => {
+                                            // if currently in remove mode, then display a red X button to delete food items
                                             const removeButton = (removeMode && currentRowIndex != 0 && currentColumnIndex == currentRow.length - 1) ? (
                                                 <span style={{color: 'red', cursor: 'pointer'}} onClick={() => removeItem(currentRowIndex)}> X </span> )
                                                      : null
-                                            if (currentRowIndex == 0) {
+
+                                            // if first row then use <th> (table header tag) otherwise use <td> (table data tag)
+                                            if (currentRowIndex == 0) { 
                                                 return (
                                                     <>
                                                         <th key={currentColumnIndex}> {data} </th>

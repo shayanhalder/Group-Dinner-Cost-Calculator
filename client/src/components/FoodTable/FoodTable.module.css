@@ -1,7 +1,9 @@
 .table {
-  border-spacing: 10px;
+  border-spacing: 7px;
   width: 100%;
   margin-top: 10px;
   text-align: center;
+  /* word-wrap: break-word; */
+  /* text-overflow: ; */
   /* table-layout: fixed; */
 }

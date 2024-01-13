@@ -6,9 +6,10 @@ import { useState } from "react";
 
 function App() {
   const [members, setMembers] = useState<string[]>([]);
+  const customToggler = <li> Shayan </li>;
 
   return (
-    <>
+    <div>
       <h1 className="title"> Group Dinner Price Calculator</h1>
       <div className="accordionContainer">
         <Accordion buttonTitle={"Group Members"} members={members}>
@@ -19,11 +20,15 @@ function App() {
           <FoodTable headers={["Name", "Price", "Quantity", "Total $", "$ / person"]} members={members} />
         </Accordion>
 
-        {/* <Accordion buttonTitle="test" members={members} replacement={test}>
-          <p> test</p>
-        </Accordion> */}
+        <Accordion buttonTitle="Individual Food Items" members={members}>
+          <ol>
+            <Accordion members={members} customToggler={customToggler}>
+              <FoodTable headers={["Name", "Price", "Quantity", "Total $"]} members={members} />
+            </Accordion>
+          </ol>
+        </Accordion>
       </div>
-    </>
+    </div>
   );
 }
 

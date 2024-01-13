@@ -1,6 +1,6 @@
 import FoodTableStyles from "./FoodTable.module.css";
 import ButtonStyles from "../Button/Button.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface FoodTableProps {
   headers: string[];
@@ -12,19 +12,34 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
   const [removeMode, setRemoveMode] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  // updates total cost and cost per person if members added/removed or if user edits any data about the food item
-  useEffect(() => {
-    let foodItemsCopy = [...foodItems];
-    for (let rowIndex = 1; rowIndex < foodItems.length; rowIndex++) {
-      // recalculate the costs based on new data
-      const totalCost = parseInt(foodItems[rowIndex][1]) * parseInt(foodItems[rowIndex][2]); // price * quantity
-      const costPerPerson = (totalCost / members.length).toFixed(2).toString();
-      foodItemsCopy[rowIndex][3] = totalCost.toString();
-      foodItemsCopy[rowIndex][4] = costPerPerson;
+  // re-calculate total cost and cost per person on each re-render since number of members could have changed or data could have been edited
+  let foodItemsCopy = [...foodItems];
+  for (let rowIndex = 1; rowIndex < foodItems.length; rowIndex++) {
+    // recalculate the costs based on new data
+    const totalCost = parseInt(foodItems[rowIndex][1]) * parseInt(foodItems[rowIndex][2]); // price * quantity
+    foodItemsCopy[rowIndex][3] = totalCost.toString();
+
+    // don't calculate price per person if the "$ / person" header isn't passed. if not passed the headers.length is 4
+    if (headers.length == 4) {
+      continue;
     }
 
-    setFoodItems(foodItemsCopy);
-  }, [members, foodItems]);
+    const costPerPerson = (totalCost / members.length).toFixed(2).toString();
+    foodItemsCopy[rowIndex][4] = costPerPerson;
+  }
+
+  // function that returns true if the food item costs were updated as a result of a changed state, otherwise returns true
+  function newFoodItemCosts(a: string[][], b: string[][]): boolean {
+    for (let rowIndex = 0; rowIndex < a.length; rowIndex++) {
+      for (let columnIndex = 0; columnIndex < a[rowIndex].length; columnIndex++) {
+        if (a[rowIndex][columnIndex] != b[rowIndex][columnIndex]) return true;
+      }
+    }
+    return false;
+  }
+
+  // update food state and re-render component only if nothing changed from the last render
+  if (newFoodItemCosts(foodItemsCopy, foodItems)) setFoodItems(foodItemsCopy);
 
   function addItem(): void {
     let newRowData = [];
@@ -38,10 +53,18 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
 
       if (index == 2) {
         // after quantity is entered, the rest of the values are calculated
-        const totalCost = parseInt(newRowData[1]) * parseInt(newRowData[2]); // price * quantity
-        const costPerPerson = Math.round((totalCost / members.length) * 100) / 100;
-
+        const totalCost: number = parseInt(newRowData[1]) * parseInt(newRowData[2]); // price * quantity
         newRowData.push(totalCost.toString());
+        console.log("header length");
+        console.log(headers.length);
+
+        if (headers.length == 4) {
+          setFoodItems([...foodItems, newRowData]);
+          return;
+        }
+        console.log("test");
+
+        const costPerPerson = Math.round((totalCost / members.length) * 100) / 100;
         newRowData.push(costPerPerson.toString());
 
         setFoodItems([...foodItems, newRowData]);
@@ -90,14 +113,14 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
                   currentRowIndex == 0 ? (
                     <th
                       style={{ color: TEXT_COLOR }}
-                      onClick={(e) => editItem(currentRowIndex, currentColumnIndex)}
+                      onClick={() => editItem(currentRowIndex, currentColumnIndex)}
                     >
                       {data}
                     </th>
                   ) : (
                     <td
                       style={{ color: TEXT_COLOR }}
-                      onClick={(e) => editItem(currentRowIndex, currentColumnIndex)}
+                      onClick={() => editItem(currentRowIndex, currentColumnIndex)}
                     >
                       {data}
                     </td>

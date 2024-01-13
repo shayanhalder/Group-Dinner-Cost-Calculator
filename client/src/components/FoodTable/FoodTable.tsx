@@ -2,10 +2,13 @@ import FoodTableStyles from "./FoodTable.module.css";
 import ButtonStyles from "../Button/Button.module.css";
 import { useState, useEffect } from "react";
 
-export default function FoodTable({ members }: { members: string[] }) {
-  const [foodItems, setFoodItems] = useState<string[][]>([
-    ["Name", "Price", "Quantity", "Total $", "$ / person"],
-  ]);
+interface FoodTableProps {
+  headers: string[];
+  members: string[];
+}
+
+export default function FoodTable({ headers, members }: FoodTableProps) {
+  const [foodItems, setFoodItems] = useState<string[][]>([headers]);
   const [removeMode, setRemoveMode] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -13,6 +16,7 @@ export default function FoodTable({ members }: { members: string[] }) {
   useEffect(() => {
     let foodItemsCopy = [...foodItems];
     for (let rowIndex = 1; rowIndex < foodItems.length; rowIndex++) {
+      // recalculate the costs based on new data
       const totalCost = parseInt(foodItems[rowIndex][1]) * parseInt(foodItems[rowIndex][2]); // price * quantity
       const costPerPerson = (totalCost / members.length).toFixed(2).toString();
       foodItemsCopy[rowIndex][3] = totalCost.toString();

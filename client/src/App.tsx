@@ -16,8 +16,12 @@ function App() {
         </Accordion>
 
         <Accordion buttonTitle={"Group Food Items"} members={members}>
-          <FoodTable members={members} />
+          <FoodTable headers={["Name", "Price", "Quantity", "Total $", "$ / person"]} members={members} />
         </Accordion>
+
+        {/* <Accordion buttonTitle="test" members={members} replacement={test}>
+          <p> test</p>
+        </Accordion> */}
       </div>
     </>
   );

@@ -5,9 +5,10 @@ interface AccordionProps {
   buttonTitle: string;
   members: string[];
   children: ReactNode;
+  customToggler?: ReactNode;
 }
 
-export default function Accordion({ buttonTitle, members, children }: AccordionProps) {
+export default function Accordion({ buttonTitle, members, children, customToggler = null }: AccordionProps) {
   const [toggled, setToggled] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const membersRef = useRef(members);
@@ -44,10 +45,17 @@ export default function Accordion({ buttonTitle, members, children }: AccordionP
 
   return (
     <div className={AccordionStyles.parent}>
-      <button className={AccordionStyles.toggle} onClick={() => setToggled(!toggled)}>
-        {" "}
-        {buttonTitle}{" "}
-      </button>
+      {/* Sets custom toggler to button by default unless customToggler prop is specified. */}
+      {customToggler != null ? (
+        <span onClick={() => setToggled(!toggled)}>{customToggler}</span>
+      ) : (
+        <button className={AccordionStyles.toggle} onClick={() => setToggled(!toggled)}>
+          {" "}
+          {buttonTitle}{" "}
+        </button>
+      )}
+
+      {/* Displays the children in the "drop down" / "hidden" part of the accordion once it is activated */}
       <div className={AccordionStyles.container} ref={ref}>
         {children}
       </div>

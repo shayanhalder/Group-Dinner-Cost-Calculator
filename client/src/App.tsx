@@ -6,7 +6,6 @@ import { useState } from "react";
 
 function App() {
   const [members, setMembers] = useState<string[]>([]);
-  const customToggler = <li> Shayan </li>;
 
   return (
     <div>
@@ -21,10 +20,20 @@ function App() {
         </Accordion>
 
         <Accordion buttonTitle="Individual Food Items" members={members}>
-          <ol>
+          {/* <ol>
             <Accordion members={members} customToggler={customToggler}>
               <FoodTable headers={["Name", "Price", "Quantity", "Total $"]} members={members} />
             </Accordion>
+          </ol> */}
+          <ol>
+            {members.map((member) => {
+              const customToggler = <li> {member} </li>;
+              return (
+                <Accordion members={members} customToggler={customToggler}>
+                  <FoodTable headers={["Name", "Price", "Quantity", "Total $"]} members={members} />
+                </Accordion>
+              );
+            })}
           </ol>
         </Accordion>
       </div>

@@ -9,16 +9,18 @@ export default function FoodTable({ members }: { members: string[] }) {
   const [removeMode, setRemoveMode] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  // if group members added or removed after creation of the food item row, then the cost per person should update
+  // updates total cost and cost per person if members added/removed or if user edits any data about the food item
   useEffect(() => {
     let foodItemsCopy = [...foodItems];
     for (let rowIndex = 1; rowIndex < foodItems.length; rowIndex++) {
-      const totalCost = parseInt(foodItems[rowIndex][3]); // price * quantity
-      foodItemsCopy[rowIndex][4] = (totalCost / members.length).toFixed(2).toString();
+      const totalCost = parseInt(foodItems[rowIndex][1]) * parseInt(foodItems[rowIndex][2]); // price * quantity
+      const costPerPerson = (totalCost / members.length).toFixed(2).toString();
+      foodItemsCopy[rowIndex][3] = totalCost.toString();
+      foodItemsCopy[rowIndex][4] = costPerPerson;
     }
 
     setFoodItems(foodItemsCopy);
-  }, [members]);
+  }, [members, foodItems]);
 
   function addItem(): void {
     let newRowData = [];
@@ -51,6 +53,14 @@ export default function FoodTable({ members }: { members: string[] }) {
     setFoodItems(foodItemsCopy);
   }
 
+  function editItem(rowIndex: number, columnIndex: number) {
+    const newData = prompt(`Enter new ${foodItems[0][columnIndex]}`);
+    let foodItemsCopy = [...foodItems];
+    if (newData) foodItemsCopy[rowIndex][columnIndex] = newData;
+
+    setFoodItems(foodItemsCopy);
+  }
+
   return (
     <div className={FoodTableStyles.parent}>
       <table className={FoodTableStyles.table}>
@@ -72,24 +82,25 @@ export default function FoodTable({ members }: { members: string[] }) {
                   ) : null;
 
                 // if first row then use <th> (table header tag) otherwise use <td> (table data tag)
-                if (currentRowIndex == 0) {
-                  return (
-                    <>
-                      <th key={currentColumnIndex} style={{ color: TEXT_COLOR }}>
-                        {" "}
-                        {data}{" "}
-                      </th>
-                      {removeButton != null ? <th key={Math.random()}> {removeButton} </th> : null}
-                    </>
+                const currentData =
+                  currentRowIndex == 0 ? (
+                    <th
+                      style={{ color: TEXT_COLOR }}
+                      onClick={(e) => editItem(currentRowIndex, currentColumnIndex)}
+                    >
+                      {data}
+                    </th>
+                  ) : (
+                    <td
+                      style={{ color: TEXT_COLOR }}
+                      onClick={(e) => editItem(currentRowIndex, currentColumnIndex)}
+                    >
+                      {data}
+                    </td>
                   );
-                }
-
                 return (
                   <>
-                    <td key={currentColumnIndex} style={{ color: TEXT_COLOR }}>
-                      {" "}
-                      {data}{" "}
-                    </td>
+                    {currentData}
                     {removeButton != null ? <td key={Math.random()}> {removeButton} </td> : null}
                   </>
                 );

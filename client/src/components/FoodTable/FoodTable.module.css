@@ -7,3 +7,9 @@
   /* text-overflow: ; */
   /* table-layout: fixed; */
 }
+
+/* .parent {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+} */

@@ -2,7 +2,7 @@ import AccordionStyles from "./Accordion.module.css";
 import { useState, useRef, useEffect, ReactNode } from "react";
 
 interface AccordionProps {
-  buttonTitle: string;
+  buttonTitle?: string;
   members: string[];
   children: ReactNode;
   customToggler?: ReactNode;
@@ -28,20 +28,20 @@ export default function Accordion({ buttonTitle, members, children, customToggle
   }, [toggled]);
 
   useEffect(() => {
-    if (buttonTitle == "Group Members") {
-      if (ref.current && membersRef.current.length < members.length) {
-        ref.current.style.height = `${ref.current.scrollHeight + 20}px`;
-        ref.current.style.overflow = "visible";
-        ref.current.style.border = "1px solid black";
-        membersRef.current = members;
-      } else if (ref.current && membersRef.current.length > members.length) {
-        ref.current.style.height = `${ref.current.scrollHeight - 30}px`;
-        ref.current.style.overflow = "visible";
-        ref.current.style.border = "2px solid var(--gray-border)";
-        membersRef.current = members;
-      }
+    // if (buttonTitle == "Group Members") {
+    if (ref.current && membersRef.current.length < members.length) {
+      ref.current.style.height = `${ref.current.scrollHeight + 20}px`;
+      ref.current.style.overflow = "visible";
+      ref.current.style.border = "2px solid var(--gray-border)";
+      membersRef.current = members;
+    } else if (ref.current && membersRef.current.length > members.length) {
+      ref.current.style.height = `${ref.current.scrollHeight - 30}px`;
+      ref.current.style.overflow = "visible";
+      ref.current.style.border = "2px solid var(--gray-border)";
+      membersRef.current = members;
     }
-  }, [members]);
+    // }
+  }, [members, children]);
 
   return (
     <div className={AccordionStyles.parent}>

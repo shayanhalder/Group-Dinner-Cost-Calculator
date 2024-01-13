@@ -7,6 +7,7 @@ export default function FoodTable({ members }: { members: string[] }) {
     ["Name", "Price", "Quantity", "Total $", "$ / person"],
   ]);
   const [removeMode, setRemoveMode] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   // if group members added or removed after creation of the food item row, then the cost per person should update
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function FoodTable({ members }: { members: string[] }) {
     <div className={FoodTableStyles.parent}>
       <table className={FoodTableStyles.table}>
         {foodItems.map((currentRow, currentRowIndex) => {
+          const TEXT_COLOR = editMode && currentRowIndex != 0 ? "orange" : "black";
           return (
             <tr key={currentRowIndex}>
               {currentRow.map((data, currentColumnIndex) => {
@@ -73,7 +75,10 @@ export default function FoodTable({ members }: { members: string[] }) {
                 if (currentRowIndex == 0) {
                   return (
                     <>
-                      <th key={currentColumnIndex}> {data} </th>
+                      <th key={currentColumnIndex} style={{ color: TEXT_COLOR }}>
+                        {" "}
+                        {data}{" "}
+                      </th>
                       {removeButton != null ? <th key={Math.random()}> {removeButton} </th> : null}
                     </>
                   );
@@ -81,7 +86,10 @@ export default function FoodTable({ members }: { members: string[] }) {
 
                 return (
                   <>
-                    <td key={currentColumnIndex}> {data} </td>
+                    <td key={currentColumnIndex} style={{ color: TEXT_COLOR }}>
+                      {" "}
+                      {data}{" "}
+                    </td>
                     {removeButton != null ? <td key={Math.random()}> {removeButton} </td> : null}
                   </>
                 );
@@ -99,6 +107,10 @@ export default function FoodTable({ members }: { members: string[] }) {
         <button className={ButtonStyles.removeButton} onClick={() => setRemoveMode(!removeMode)}>
           {" "}
           Remove{" "}
+        </button>
+        <button className={ButtonStyles.editButton} onClick={() => setEditMode(!editMode)}>
+          {" "}
+          Edit{" "}
         </button>
       </div>
     </div>

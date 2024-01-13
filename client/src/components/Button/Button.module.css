@@ -28,6 +28,17 @@
   background-color: var(--remove-button-hover);
 }
 
+.editButton {
+  width: 40%;
+  height: 50px;
+  margin: 10px 5px;
+  border-radius: 20px;
+  border: 3px solid var(--remove-button-border);
+  background-color: lightyellow;
+  transition: background-color 0.2s ease-out;
+  cursor: pointer;
+}
+
 .container {
   display: flex;
   justify-content: center;

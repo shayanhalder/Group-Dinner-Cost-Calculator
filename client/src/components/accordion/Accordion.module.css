@@ -15,10 +15,10 @@
     border: 2px solid var(--gray-border);
     overflow: hidden;
     background-color: var(--accordion-background-color);
-    height: 0px;
+    max-height: 0px;
     position: relative;
     left: 5px;
-    transition: height 0.2s ease-out;
+    transition: max-height 0.2s ease-out;
   }
 }
 

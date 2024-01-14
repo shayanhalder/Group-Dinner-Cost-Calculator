@@ -28,19 +28,17 @@ export default function Accordion({ buttonTitle, members, children, customToggle
   }, [toggled]);
 
   useEffect(() => {
-    // if (buttonTitle == "Group Members") {
-    if (ref.current && membersRef.current.length < members.length) {
+    if (ref.current && membersRef.current.length < members.length && toggled) {
       ref.current.style.height = `${ref.current.scrollHeight + 20}px`;
       ref.current.style.overflow = "visible";
       ref.current.style.border = "2px solid var(--gray-border)";
       membersRef.current = members;
-    } else if (ref.current && membersRef.current.length > members.length) {
+    } else if (ref.current && membersRef.current.length > members.length && toggled) {
       ref.current.style.height = `${ref.current.scrollHeight - 30}px`;
       ref.current.style.overflow = "visible";
       ref.current.style.border = "2px solid var(--gray-border)";
       membersRef.current = members;
     }
-    // }
   }, [members, children]);
 
   return (

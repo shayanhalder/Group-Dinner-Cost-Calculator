@@ -55,15 +55,11 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
         // after quantity is entered, the rest of the values are calculated
         const totalCost: number = parseInt(newRowData[1]) * parseInt(newRowData[2]); // price * quantity
         newRowData.push(totalCost.toString());
-        console.log("header length");
-        console.log(headers.length);
 
         if (headers.length == 4) {
           setFoodItems([...foodItems, newRowData]);
           return;
         }
-        console.log("test");
-
         const costPerPerson = Math.round((totalCost / members.length) * 100) / 100;
         newRowData.push(costPerPerson.toString());
 
@@ -81,6 +77,8 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
   }
 
   function editItem(rowIndex: number, columnIndex: number) {
+    if (!editMode) return;
+
     const newData = prompt(`Enter new ${foodItems[0][columnIndex]}`);
     let foodItemsCopy = [...foodItems];
     if (newData) foodItemsCopy[rowIndex][columnIndex] = newData;
@@ -92,10 +90,16 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
     <div className={FoodTableStyles.parent}>
       <table className={FoodTableStyles.table}>
         {foodItems.map((currentRow, currentRowIndex) => {
-          const TEXT_COLOR = editMode && currentRowIndex != 0 ? "orange" : "black";
           return (
             <tr key={currentRowIndex}>
               {currentRow.map((data, currentColumnIndex) => {
+                const TEXT_COLOR =
+                  editMode && currentRowIndex != 0 && currentColumnIndex <= 2 ? "orange" : "black";
+
+                const onClickAction =
+                  editMode && currentRowIndex != 0 && currentColumnIndex <= 2
+                    ? () => editItem(currentRowIndex, currentColumnIndex)
+                    : () => null;
                 // if currently in remove mode, then display a red X button to delete food items
                 const removeButton =
                   removeMode && currentRowIndex != 0 && currentColumnIndex == currentRow.length - 1 ? (
@@ -111,17 +115,11 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
                 // if first row then use <th> (table header tag) otherwise use <td> (table data tag)
                 const currentData =
                   currentRowIndex == 0 ? (
-                    <th
-                      style={{ color: TEXT_COLOR }}
-                      onClick={() => editItem(currentRowIndex, currentColumnIndex)}
-                    >
+                    <th style={{ color: TEXT_COLOR }} onClick={onClickAction}>
                       {data}
                     </th>
                   ) : (
-                    <td
-                      style={{ color: TEXT_COLOR }}
-                      onClick={() => editItem(currentRowIndex, currentColumnIndex)}
-                    >
+                    <td style={{ color: TEXT_COLOR }} onClick={onClickAction}>
                       {data}
                     </td>
                   );

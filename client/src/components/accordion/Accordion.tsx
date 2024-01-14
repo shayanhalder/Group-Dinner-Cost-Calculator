@@ -46,8 +46,7 @@ export default function Accordion({ buttonTitle, members, children, customToggle
         <span onClick={() => setToggled(!toggled)}>{customToggler}</span>
       ) : (
         <button className={AccordionStyles.toggle} onClick={() => setToggled(!toggled)}>
-          {" "}
-          {buttonTitle}{" "}
+          {buttonTitle}
         </button>
       )}
 

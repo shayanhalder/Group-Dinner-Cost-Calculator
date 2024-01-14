@@ -39,10 +39,10 @@
     border: 2px solid var(--gray-border);
     background-color: var(--accordion-background-color);
     overflow: hidden;
-    height: 0px;
+    max-height: 0px;
     position: relative;
     left: 50px;
-    transition: height 0.2s ease-out;
+    transition: max-height 0.2s ease-out;
   }
 }
 

@@ -1,0 +1,20 @@
+.arrow {
+  font-weight: bold;
+  display: inline-flex;
+  width: min-content;
+  height: min-content;
+
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.rotated {
+  transform: rotateZ(90deg);
+
+  /* animation-name: dropdown;
+    animation-duration: 5s; */
+}
+
+.listItem {
+  list-style-type: none;
+}

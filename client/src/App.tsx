@@ -2,6 +2,7 @@ import "./App.css";
 import Accordion from "./components/accordion/Accordion.tsx";
 import MemberList from "./components/MemberList/MemberList.tsx";
 import FoodTable from "./components/FoodTable/FoodTable.tsx";
+import ArrowBullet from "./components/ArrowBullet/ArrowBullet.tsx";
 import { useState } from "react";
 
 function App() {
@@ -20,21 +21,20 @@ function App() {
         </Accordion>
 
         <Accordion buttonTitle="Individual Food Items" members={members}>
-          {/* <ol>
-            <Accordion members={members} customToggler={customToggler}>
-              <FoodTable headers={["Name", "Price", "Quantity", "Total $"]} members={members} />
-            </Accordion>
-          </ol> */}
-          <ol>
-            {members.map((member) => {
-              const customToggler = <li> {member} </li>;
-              return (
-                <Accordion members={members} customToggler={customToggler}>
-                  <FoodTable headers={["Name", "Price", "Quantity", "Total $"]} members={members} />
-                </Accordion>
-              );
-            })}
-          </ol>
+          {members.length > 0 ? (
+            <ol style={{ listStyleType: "none", padding: "0px 15px" }}>
+              {members.map((member) => {
+                const customToggler = <ArrowBullet name={member} />;
+                return (
+                  <Accordion members={members} customToggler={customToggler}>
+                    <FoodTable headers={["Name", "Price", "Quantity", "Total $"]} members={members} />
+                  </Accordion>
+                );
+              })}
+            </ol>
+          ) : (
+            <p> To add individual food items, first add group members. </p>
+          )}
         </Accordion>
       </div>
     </div>

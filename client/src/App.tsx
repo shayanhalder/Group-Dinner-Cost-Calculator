@@ -9,7 +9,7 @@ function App() {
   const [members, setMembers] = useState<string[]>([]);
 
   return (
-    <div>
+    <div className="root">
       <h1 className="title"> Group Dinner Price Calculator</h1>
       <div className="accordionContainer">
         <Accordion buttonTitle={"Group Members"} members={members}>

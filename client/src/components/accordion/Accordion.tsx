@@ -43,7 +43,9 @@ export default function Accordion({ buttonTitle, members, children, customToggle
     <div className={AccordionStyles.parent}>
       {/* Sets custom toggler to button by default unless customToggler prop is specified. */}
       {customToggler != null ? (
-        <span onClick={() => setToggled(!toggled)}>{customToggler}</span>
+        <span style={{ width: "fit-content", cursor: "pointer" }} onClick={() => setToggled(!toggled)}>
+          {customToggler}
+        </span>
       ) : (
         <button className={AccordionStyles.toggle} onClick={() => setToggled(!toggled)}>
           {buttonTitle}

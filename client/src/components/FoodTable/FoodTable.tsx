@@ -1,10 +1,11 @@
 import FoodTableStyles from "./FoodTable.module.css";
 import ButtonStyles from "../Button/Button.module.css";
 import { useState } from "react";
+import { memberCost } from "../../App";
 
 interface FoodTableProps {
   headers: string[];
-  members: string[];
+  members: memberCost;
 }
 
 export default function FoodTable({ headers, members }: FoodTableProps) {
@@ -24,7 +25,7 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
       continue;
     }
 
-    const costPerPerson = (totalCost / members.length).toFixed(2).toString();
+    const costPerPerson = (totalCost / Object.keys(members).length).toFixed(2).toString();
     foodItemsCopy[rowIndex][4] = costPerPerson;
   }
 
@@ -60,7 +61,7 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
           setFoodItems([...foodItems, newRowData]);
           return;
         }
-        const costPerPerson = Math.round((totalCost / members.length) * 100) / 100;
+        const costPerPerson = Math.round((totalCost / Object.keys(members).length) * 100) / 100;
         newRowData.push(costPerPerson.toString());
 
         setFoodItems([...foodItems, newRowData]);

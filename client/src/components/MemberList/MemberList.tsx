@@ -1,9 +1,10 @@
 import ButtonStyles from "../Button/Button.module.css";
 import { useState, useRef } from "react";
+import { memberCost } from "../../App";
 
 interface MemberListProps {
-  groupMembers: string[];
-  setGroupMembers: React.Dispatch<React.SetStateAction<string[]>>;
+  groupMembers: memberCost;
+  setGroupMembers: React.Dispatch<React.SetStateAction<memberCost>>;
 }
 
 export default function MemberList({ groupMembers, setGroupMembers }: MemberListProps) {
@@ -12,22 +13,48 @@ export default function MemberList({ groupMembers, setGroupMembers }: MemberList
 
   function addMember() {
     let newMember = prompt("Name of new member: ");
+    let groupMembersCopy = { ...groupMembers };
 
     if (newMember == null || newMember == "") return;
+    groupMembersCopy[newMember] = {
+      groupCost: 0,
+      individualCost: 0,
+    };
 
-    setGroupMembers([...groupMembers, newMember]);
+    setGroupMembers(groupMembersCopy);
   }
 
   function removeMember(e: any) {
     const memberName = e.target.dataset.membername;
-    setGroupMembers([...groupMembers].filter((member) => member !== memberName));
+    let groupMembersCopy = { ...groupMembers };
+    delete groupMembersCopy[memberName];
+
+    setGroupMembers(groupMembersCopy);
   }
 
   return (
     <>
-      <p> Group Members: {groupMembers.length} </p>
+      <p> Group Members: {Object.keys(groupMembers).length} </p>
       <ol>
-        {groupMembers.map((member: string) => {
+        {Object.keys(groupMembers).map((memberName: string) => {
+          return (
+            <li key={Math.random()}>
+              {" "}
+              {memberName}{" "}
+              {removeMode == true ? (
+                <span
+                  key={Math.random()}
+                  onClick={removeMember}
+                  data-membername={memberName}
+                  style={{ color: "red", cursor: "pointer" }}
+                >
+                  X
+                </span>
+              ) : null}
+            </li>
+          );
+        })}
+        {/* {groupMembers.map((member: string) => {
           return (
             <li key={Math.random()}>
               {" "}
@@ -44,7 +71,7 @@ export default function MemberList({ groupMembers, setGroupMembers }: MemberList
               ) : null}
             </li>
           );
-        })}
+        })} */}
       </ol>
       <div ref={containerRef} className={ButtonStyles.container}>
         <button className={ButtonStyles.addButton} onClick={() => addMember()}>

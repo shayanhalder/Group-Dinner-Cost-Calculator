@@ -5,8 +5,15 @@ import FoodTable from "./components/FoodTable/FoodTable.tsx";
 import ArrowBullet from "./components/ArrowBullet/ArrowBullet.tsx";
 import { useState } from "react";
 
+export interface memberCost {
+  [key: string]: {
+    groupCost: number;
+    individualCost: number;
+  };
+}
+
 function App() {
-  const [members, setMembers] = useState<string[]>([]);
+  const [members, setMembers] = useState<memberCost>({});
 
   return (
     <div className="root">
@@ -21,9 +28,9 @@ function App() {
         </Accordion>
 
         <Accordion buttonTitle="Individual Food Items" members={members}>
-          {members.length > 0 ? (
+          {Object.keys(members).length > 0 ? (
             <ol style={{ listStyleType: "none", padding: "0px 15px" }}>
-              {members.map((member) => {
+              {Object.keys(members).map((member) => {
                 const customToggler = <ArrowBullet name={member} />;
                 return (
                   <Accordion members={members} customToggler={customToggler}>

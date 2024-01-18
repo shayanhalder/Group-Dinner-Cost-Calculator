@@ -1,9 +1,10 @@
 import AccordionStyles from "./Accordion.module.css";
 import { useState, useRef, useEffect, ReactNode } from "react";
+import { memberCost } from "../../App";
 
 interface AccordionProps {
   buttonTitle?: string;
-  members: string[];
+  members: memberCost;
   children: ReactNode;
   customToggler?: ReactNode;
 }

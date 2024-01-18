@@ -3,13 +3,8 @@
   width: 100%;
   margin-top: 10px;
   text-align: center;
-  /* word-wrap: break-word; */
-  /* text-overflow: ; */
-  /* table-layout: fixed; */
 }
 
-/* .parent {
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-} */
+.parent {
+  width: 100%;
+}

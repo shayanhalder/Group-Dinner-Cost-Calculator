@@ -42,7 +42,7 @@
   }
 
   .container {
-    /* width: 80%; */
+    /* width: 0%; */
     border-radius: 20px;
     padding: 0px 10px;
     border: 2px solid var(--gray-border);
@@ -58,9 +58,10 @@
   .parent {
     display: flex;
     justify-content: center;
-    width: 60%;
+    width: 30%;
     /* flex-wrap: wrap; */
     flex-direction: column;
     margin: 10px 0px;
+    /* align-self: stretch; */
   }
 }

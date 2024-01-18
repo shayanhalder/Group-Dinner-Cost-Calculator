@@ -1,3 +1,10 @@
 li {
   margin: 20px 20px;
 }
+
+.tableContainer {
+  border-spacing: 7px;
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+}

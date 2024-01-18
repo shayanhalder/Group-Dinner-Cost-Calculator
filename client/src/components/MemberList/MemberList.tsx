@@ -1,4 +1,5 @@
 import ButtonStyles from "../Button/Button.module.css";
+import MemberListStyles from "./MemberList.module.css";
 import { useState, useRef } from "react";
 import { memberCost } from "../../App";
 
@@ -35,44 +36,35 @@ export default function MemberList({ groupMembers, setGroupMembers }: MemberList
   return (
     <>
       <p> Group Members: {Object.keys(groupMembers).length} </p>
-      <ol>
+      <table className={MemberListStyles.tableContainer}>
+        <tr>
+          <th> Name </th>
+          <th> Group Cost </th>
+          <th> Individual Cost </th>
+          <th> Total </th>
+        </tr>
+
         {Object.keys(groupMembers).map((memberName: string) => {
           return (
-            <li key={Math.random()}>
-              {" "}
-              {memberName}{" "}
+            <tr key={memberName}>
+              <td> {memberName} </td>
+              <td> {groupMembers[memberName].groupCost} </td>
+              <td> {groupMembers[memberName].individualCost} </td>
+              <td> {groupMembers[memberName].groupCost + groupMembers[memberName].individualCost} </td>
+
               {removeMode == true ? (
-                <span
-                  key={Math.random()}
+                <td
                   onClick={removeMember}
                   data-membername={memberName}
                   style={{ color: "red", cursor: "pointer" }}
                 >
                   X
-                </span>
+                </td>
               ) : null}
-            </li>
+            </tr>
           );
         })}
-        {/* {groupMembers.map((member: string) => {
-          return (
-            <li key={Math.random()}>
-              {" "}
-              {member}{" "}
-              {removeMode == true ? (
-                <span
-                  key={Math.random()}
-                  onClick={removeMember}
-                  data-membername={member}
-                  style={{ color: "red", cursor: "pointer" }}
-                >
-                  X
-                </span>
-              ) : null}
-            </li>
-          );
-        })} */}
-      </ol>
+      </table>
       <div ref={containerRef} className={ButtonStyles.container}>
         <button className={ButtonStyles.addButton} onClick={() => addMember()}>
           {" "}

@@ -17,17 +17,19 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
   let foodItemsCopy = [...foodItems];
   for (let rowIndex = 1; rowIndex < foodItems.length; rowIndex++) {
     // recalculate the costs based on new data
-    const totalCost = parseInt(foodItems[rowIndex][1]) * parseInt(foodItems[rowIndex][2]); // price * quantity
-    foodItemsCopy[rowIndex][3] = totalCost.toString();
+    const totalCost =
+      parseInt(foodItems[rowIndex][headers.indexOf("Price")]) *
+      parseInt(foodItems[rowIndex][headers.indexOf("Quantity")]); // price * quantity
+    foodItemsCopy[rowIndex][headers.indexOf("Total $")] = totalCost.toString();
 
-    // don't calculate price per person if the "$ / person" header isn't passed. if not passed the headers.length is 4
-    if (headers.length == 4) {
-      continue;
+    if (headers.includes("$ / person")) {
+      const costPerPerson = (totalCost / Object.keys(members).length).toFixed(2).toString();
+      foodItemsCopy[rowIndex][4] = costPerPerson;
     }
-
-    const costPerPerson = (totalCost / Object.keys(members).length).toFixed(2).toString();
-    foodItemsCopy[rowIndex][4] = costPerPerson;
   }
+
+  // update food state and re-render component only if nothing changed from the last render
+  if (newFoodItemCosts(foodItemsCopy, foodItems)) setFoodItems(foodItemsCopy);
 
   // function that returns true if the food item costs were updated as a result of a changed state, otherwise returns true
   function newFoodItemCosts(a: string[][], b: string[][]): boolean {
@@ -38,9 +40,6 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
     }
     return false;
   }
-
-  // update food state and re-render component only if nothing changed from the last render
-  if (newFoodItemCosts(foodItemsCopy, foodItems)) setFoodItems(foodItemsCopy);
 
   function addItem(): void {
     let newRowData = [];

@@ -24,7 +24,11 @@ function App() {
         </Accordion>
 
         <Accordion buttonTitle={"Group Food Items"} members={members}>
-          <FoodTable headers={["Name", "Price", "Quantity", "Total $", "$ / person"]} members={members} />
+          <FoodTable
+            headers={["Name", "Price", "Quantity", "Total $", "$ / person"]}
+            members={members}
+            setMembers={setMembers}
+          />
         </Accordion>
 
         <Accordion buttonTitle="Individual Food Items" members={members}>
@@ -34,7 +38,11 @@ function App() {
                 const customToggler = <ArrowBullet name={member} />;
                 return (
                   <Accordion members={members} customToggler={customToggler}>
-                    <FoodTable headers={["Name", "Price", "Quantity", "Total $"]} members={members} />
+                    <FoodTable
+                      headers={["Name", "Price", "Quantity", "Total $"]}
+                      members={members}
+                      setMembers={setMembers}
+                    />
                   </Accordion>
                 );
               })}

@@ -6,10 +6,11 @@ import { memberCost } from "../../App";
 interface FoodTableProps {
   headers: string[];
   members: memberCost;
+  setMembers: React.Dispatch<React.SetStateAction<memberCost>>;
 }
 
-export default function FoodTable({ headers, members }: FoodTableProps) {
-  const [foodItems, setFoodItems] = useState<string[][]>([headers]);
+export default function FoodTable({ headers, members, setMembers }: FoodTableProps) {
+  const [foodItems, setFoodItems] = useState<string[][]>([headers]); // [headers [(list of excluded ppl)]]
   const [removeMode, setRemoveMode] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -62,8 +63,13 @@ export default function FoodTable({ headers, members }: FoodTableProps) {
         }
         const costPerPerson = Math.round((totalCost / Object.keys(members).length) * 100) / 100;
         newRowData.push(costPerPerson.toString());
+        let membersCopy = { ...members };
+        for (let member of Object.keys(members)) {
+          membersCopy[member]["groupCost"] += costPerPerson;
+        }
 
         setFoodItems([...foodItems, newRowData]);
+        setMembers(membersCopy);
         return;
       }
     }
